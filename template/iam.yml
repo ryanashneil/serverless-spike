@@ -1,0 +1,24 @@
+AuctionsTable:
+    Effect: Allow
+    Action:
+        - dynamodb:PutItem
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+    Resource:
+        - ${self:custom.AuctionsTable.arn}
+        - !Join ['/', ['${self:custom.AuctionsTable.arn}', 'index', 'statusAndEndDate']]
+
+MailSQS:
+    Effect: Allow
+    Action:
+        - sqs:ReceiveMessage
+    Resource:
+        - ${self:custom.MailSQS.arn}
+
+SendEmail:
+    Effect: Allow
+    Action:
+        - ses:SendEmail
+    Resource:
+        - arn:aws:ses:*
